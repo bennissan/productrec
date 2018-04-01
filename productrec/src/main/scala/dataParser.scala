@@ -13,19 +13,56 @@ object dataParser{
 	
 // 	import scala.util.parsing.json._
 
-
+	import play.api.libs.json._
+	import play.api.libs.json.Reads._
+	import play.api.libs.functional.syntax._
 	
-// 	def parseJson(jsonString:String) = {
-// 		jsonString = ("""
+	def parseJson(jsonString:String) = {
+// refer to here for the example
+// https://github.com/playframework/play-json
+
+// 		val jsonString2 = ("""
 //   {"name": "Naoki",  "lang": ["Java", "Scala"]}
 // """)
-// 		val result = JSON.parseFull(jsonString)
 
-// 		result match {
-// 		  case Some(e) => println(e) // => Map(name -> Naoki, lang -> List(Java, Scala))
-// 		  case None => println("Failed.")
-// 		}
-// 	}
+		val json: JsValue = Json.parse("""
+			{
+			  "name" : "Watership Down",
+			  "location" : {
+			    "lat" : 51.235685,
+			    "long" : -1.309197
+			  },
+			  "residents" : [ {
+			    "name" : "Fiver",
+			    "age" : 4,
+			    "role" : null
+			  }, {
+			    "name" : "Bigwig",
+			    "age" : 6,
+			    "role" : "Owsla"
+			  } ]
+			}
+			""")
+
+		// val json: JsValue = Json.parse(jsonString2)
+		val jsonString3 = Json.stringify(json)
+
+
+		val lat = (json \ "location" \ "lat").get
+		println(lat)
+
+		val bigwig = (json \ "residents" \ 1).get
+// returns {"name":"Bigwig","age":6,"role":"Owsla"}
+
+
+		//  json match {
+		//   case Some(e) => println(e) // => Map(name -> Naoki, lang -> List(Java, Scala))
+		//   case None => println("Failed.")
+		// }
+
+
+		println(jsonString3)
+	}
 
 // 		import scala.collection.mutable.ArrayBuffer
 // 	def getLabelsArray(filePath:String) : Array[Term] = {
