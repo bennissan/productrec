@@ -1,0 +1,40 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:12:20: object parsing is not a member of package util[0m
+[0m[[0m[31merror[0m] [0m[0m	import scala.util.parsing.json._[0m
+[0m[[0m[31merror[0m] [0m[0m	                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:17:14: reassignment to val[0m
+[0m[[0m[31merror[0m] [0m[0m		jsonString = ("""[0m
+[0m[[0m[31merror[0m] [0m[0m		           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:20:16: not found: value JSON[0m
+[0m[[0m[31merror[0m] [0m[0m		val result = JSON.parseFull(jsonString)[0m
+[0m[[0m[31merror[0m] [0m[0m		             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:95:24: not found: type DenseVector[0m
+[0m[[0m[31merror[0m] [0m[0m	def trainForThetas() :DenseVector[Double]= {[0m
+[0m[[0m[31merror[0m] [0m[0m	                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:97:19: not found: type LBFGS[0m
+[0m[[0m[31merror[0m] [0m[0m		val lbfgs = new LBFGS[DenseVector[Double]](maxIter=100, m=3)[0m
+[0m[[0m[31merror[0m] [0m[0m		                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:97:46: not found: value maxIter[0m
+[0m[[0m[31merror[0m] [0m[0m		val lbfgs = new LBFGS[DenseVector[Double]](maxIter=100, m=3)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:97:60: reassignment to val[0m
+[0m[[0m[31merror[0m] [0m[0m		val lbfgs = new LBFGS[DenseVector[Double]](maxIter=100, m=3)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:101:15: not found: type DiffFunction[0m
+[0m[[0m[31merror[0m] [0m[0m		val f = new DiffFunction[DenseVector[Double]]{[0m
+[0m[[0m[31merror[0m] [0m[0m		            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:102:21: not found: type DenseVector[0m
+[0m[[0m[31merror[0m] [0m[0m			def calculate(x: DenseVector[Double]) = {[0m
+[0m[[0m[31merror[0m] [0m[0m			                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:105:6: not found: value likelihood[0m
+[0m[[0m[31merror[0m] [0m[0m				(likelihood(x),gradient(x))[0m
+[0m[[0m[31merror[0m] [0m[0m				 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:105:20: not found: value gradient[0m
+[0m[[0m[31merror[0m] [0m[0m				(likelihood(x),gradient(x))[0m
+[0m[[0m[31merror[0m] [0m[0m				               ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:110:20: not found: type DenseVector[0m
+[0m[[0m[31merror[0m] [0m[0m		val initialPoint:DenseVector[Double] = DenseVector(0,0)[0m
+[0m[[0m[31merror[0m] [0m[0m		                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:110:42: not found: value DenseVector[0m
+[0m[[0m[31merror[0m] [0m[0m		val initialPoint:DenseVector[Double] = DenseVector(0,0)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m13 errors found[0m

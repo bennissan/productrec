@@ -25,6 +25,7 @@ version := "1.0"
 // You can define other libraries as dependencies in your build like this:
 libraryDependencies += "org.typelevel" %% "cats-core" % "1.0.1"
 libraryDependencies ++= Seq("org.scalanlp" %% "breeze" % "0.13.1", "org.scalanlp" %% "breeze-natives" % "0.13.1")
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.7"
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the cats dependency to the set of dependencies that sbt will go
 // and fetch when it starts up.
