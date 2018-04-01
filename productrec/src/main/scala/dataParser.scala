@@ -1,29 +1,88 @@
 
 object dataParser{
-// ignore this file for now 
-
-
-// 	val k = 3
-// 	val m = 2
-// 	val sigma = 0.5
-
-// 	type Label = String
-// 	type Term = String
-// 	val labels: List[Label] = List("NOUN","VERB","OTHER")
-	
-// 	import scala.util.parsing.json._
+// this file will allow you to parse http://jmcauley.ucsd.edu/data/amazon/ 5-core json files
 
 	import play.api.libs.json._
 	import play.api.libs.json.Reads._
 	import play.api.libs.functional.syntax._
 	
-	def parseJson(jsonString:String) = {
+
+import scala.io.Source
+import java.io._
+
+
+// within Sbt's RIPL try running this line and see how the map counts every term's occurence within Musical_Instruments_5.json set of reviews
+// dataParser.parseFromFileName("C:/_____/Desktop/productrec/productrec/src/resources/Musical_Instruments_5.json")
+
+	def parseFromFileName(filePath:String):collection.mutable.Map[String, Array[Int]] =  {
+		
+		// "C:/______/Desktop/productrec/productrec/src/resources/Musical_Instruments_5.json"
+		
+		// val source: String = Source.fromFile(filePath).getLines.mkString
+        var TrainingDataMap = collection.mutable.Map[String, Array[Int]]() 
+		var inputTermsMap = collection.mutable.Map[String, Array[Int]]() 
+
+        val totalNumberOfReviews = scala.io.Source.fromFile(filePath).getLines.size
+		val readmeText : Iterator[String] = 	scala.io.Source.fromFile(filePath).getLines()
+		var reviewIndex: Int = 0
+
+
+
+		while (readmeText.hasNext) {
+			// debugIterator = debugIterator + 1
+
+
+ 			 var lineText =  readmeText.next()
+			val json: JsValue = Json.parse(lineText)
+			val reviewText = (json \ "reviewText" ).get
+			val inputTermsArray = splitTextIntoTermsArray(Json.stringify(reviewText))
+			inputTermsMap =  addTermsToTermsMap(inputTermsArray, inputTermsMap, reviewIndex, totalNumberOfReviews)
+			reviewIndex = reviewIndex + 1
+
+			}
+
+			TrainingDataMap = inputTermsMap
+			return TrainingDataMap 
+		}
+
+
+		// import scala.collection.mutable.ArrayBuffer
+	def splitTextIntoTermsArray(reviewText:String):Array[String] = {
+		// var labelsArray = ArrayBuffer[String]()
+		 val termsArray = reviewText.split(" ")
+		 return termsArray
+	}
+
+	def addTermsToTermsMap(inputTermsArray:Array[String],inputTermsMap:collection.mutable.Map[String, Array[Int]], reviewIndex:Int, totalNumberOfReviews:Int):collection.mutable.Map[String, Array[Int]] = {
+		// iterate through the inputTermsArray and add it to the map of termsArray
+		// if there are a total of 4 total documents, then Map should be i.e key = "dog" value = [0, 1, 0, 1] if documents 2 and 4 have the term dog
+		for( a <- 0 to inputTermsArray.length-1){
+
+ 			 var keyString = inputTermsArray(a)
+				if( inputTermsMap.contains( keyString )) {
+			     }  else {
+			     	val emptyArray = 
+			     		inputTermsMap += (keyString ->  Array.fill(1)(0) )
+			           // inputTermsMap += (keyString ->  Array.fill(1)(0) )
+			       		// println(inputTermsMap(keyString)(1))
+
+			      }
+			      var valueArray  = inputTermsMap(keyString)
+			     	// valueArray(reviewIndex) = valueArray(reviewIndex) + 1
+			     	valueArray(0) = valueArray(0) + 1
+			     	inputTermsMap(keyString) = valueArray
+			     	println(keyString)
+			     	println(valueArray(0))
+			}
+			return inputTermsMap
+	}
+
+
+
+
+	def parseJsonExampleFunction(jsonString:String) = {
 // refer to here for the example
 // https://github.com/playframework/play-json
-
-// 		val jsonString2 = ("""
-//   {"name": "Naoki",  "lang": ["Java", "Scala"]}
-// """)
 
 		val json: JsValue = Json.parse("""
 			{
@@ -52,105 +111,10 @@ object dataParser{
 		println(lat)
 
 		val bigwig = (json \ "residents" \ 1).get
-// returns {"name":"Bigwig","age":6,"role":"Owsla"}
-
-
-		//  json match {
-		//   case Some(e) => println(e) // => Map(name -> Naoki, lang -> List(Java, Scala))
-		//   case None => println("Failed.")
-		// }
-
 
 		println(jsonString3)
 	}
 
-// 		import scala.collection.mutable.ArrayBuffer
-// 	def getLabelsArray(filePath:String) : Array[Term] = {
-// 		val readmeText : Iterator[String] = scala.io.Source.fromFile(filePath).getLines()
-// 		// var arrayIndex = 0
-		
-// 		var labelsArray = ArrayBuffer[Label]()
-// 		while (readmeText.hasNext) {
-// 			  var lineText =  readmeText.next()
-// 			  if(lineText.isEmpty()){
-
-// 			  }else{
-// 			  var label = getLabelFromLineText(lineText)
-// 			  labelsArray += label
-// 				}
-// 			}
-
-// 			// println(labelsArray)
-			
-// 			return labelsArray.toArray
-// 	}
-
-
-// 	def getTermsArray(filePath:String) : Array[Label] = {
-// 		val readmeText : Iterator[String] = scala.io.Source.fromFile(filePath).getLines()
-// 		// var arrayIndex = 0
-		
-// 		var termsArray = ArrayBuffer[Label]()
-// 		while (readmeText.hasNext) {
-
-// 			  var lineText =  readmeText.next()
-// 			  if(lineText.isEmpty()){
-
-// 			  }else{
-// 			  	var word = getWordFromLineText(lineText)
-// 			    termsArray += word
-// 			  }
-// 			}
-
-// 			// println(termsArray)
-			
-// 			return termsArray.toArray
-// 	}
-
-
-
-// 	def getWordFromLineText(lineText:String) :String = {
-// 			  val splitArray = lineText.split(" ")
-// 			  val word = splitArray(0)
-// 			  return word
-// 	}
-
-// 	def getLabelFromLineText(lineText:String) :Label = {
-// 			  val splitArray = lineText.split(" ")
-// 			  val prelabel = splitArray(1)
-// 			  // println(prelabel)
-// 			  var label = "OTHER"
-// 			  if (prelabel.charAt(0).toString == "V"){
-// 			  	 label = "VERB"
-// 			  }else if(prelabel.charAt(0).toString == "N"){
-// 			  	 label = "NOUN"
-// 			  }
-
-// 			  return label
-// 	}
-
-
-
-// 	def trainForThetas() :DenseVector[Double]= {
-
-// 		val lbfgs = new LBFGS[DenseVector[Double]](maxIter=100, m=3)
-
-
-
-// 		val f = new DiffFunction[DenseVector[Double]]{
-// 			def calculate(x: DenseVector[Double]) = {
-
-// 				println("current ThetaVector = " + x)
-// 				(likelihood(x),gradient(x))
-// 			}
-// 		}
-
-
-// 		val initialPoint:DenseVector[Double] = DenseVector(0,0)
-// 		val optimum = lbfgs.minimize(f,initialPoint)
-// 		println(optimum)
-// 		return optimum
-// 	}
 
 }
 

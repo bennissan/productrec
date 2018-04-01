@@ -1,11 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:27:10: constructor cannot be instantiated to expected type;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Some[A][0m
-[0m[[0m[31merror[0m] [0m[0m required: play.api.libs.json.JsValue[0m
-[0m[[0m[31merror[0m] [0m[0m		  case Some(e) => println(e) // => Map(name -> Naoki, lang -> List(Java, Scala))[0m
-[0m[[0m[31merror[0m] [0m[0m		       ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:28:10: pattern type is incompatible with expected type;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : None.type[0m
-[0m[[0m[31merror[0m] [0m[0m required: play.api.libs.json.JsValue[0m
-[0m[[0m[31merror[0m] [0m[0m		  case None => println("Failed.")[0m
-[0m[[0m[31merror[0m] [0m[0m		       ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\dataParser.scala:129:49: ';' expected but ')' found.[0m
+[0m[[0m[31merror[0m] [0m[0m			       		println(inputTermsMap(keyString)(1)))[0m
+[0m[[0m[31merror[0m] [0m[0m			       		                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
