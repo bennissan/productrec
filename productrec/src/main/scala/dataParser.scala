@@ -1,99 +1,105 @@
-
-object dataParser{
 // this file will allow you to parse http://jmcauley.ucsd.edu/data/amazon/ 5-core json files
 
-	import play.api.libs.json._
-	import play.api.libs.json.Reads._
-	import play.api.libs.functional.syntax._
-	
+import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
 
 import scala.io.Source
 import java.io._
 
-type dataMap = collection.mutable.Map[String, Int]
-// within Sbt's RIPL try running this line and see how the map counts every term's occurence within Musical_Instruments_5.json set of reviews
-// dataParser.parseFromFileName("C:/_____/Desktop/productrec/productrec/src/resources/Musical_Instruments_5.json")
+object DataParser {
 
-	def parseFromFileName(filePath:String):dataMap =  {
-		
-		// "C:/______/Desktop/productrec/productrec/src/resources/Musical_Instruments_5.json"
-		
-		// val source: String = Source.fromFile(filePath).getLines.mkString
-        var TrainingDataMap = collection.mutable.Map[String, Int]()
-		var inputTermsMap = collection.mutable.Map[String, Int]()
+	type DataMap = collection.mutable.Map[String, Int]
+	// within Sbt's RIPL try running this line and see how the map counts every term's occurence within Musical_Instruments_5.json set of reviews
+	// dataParser.parseFromFileName("C:/_____/Desktop/productrec/productrec/src/resources/Musical_Instruments_5.json")
 
-        val totalNumberOfReviews = scala.io.Source.fromFile(filePath).getLines.size
-		val readmeText : Iterator[String] = 	scala.io.Source.fromFile(filePath).getLines()
-		var reviewIndex: Int = 0
+	class TermDocumentMatrix (val s : Int) {
+		val size = s
+		val matrix = collection.mutable.Map[String, Array[Int]]()
 
-
-
-		while (readmeText.hasNext) {
-			// debugIterator = debugIterator + 1
-
-
- 			 var lineText =  readmeText.next()
-			val json: JsValue = Json.parse(lineText)
-			val reviewText = (json \ "reviewText" ).get
-			val inputTermsArray = splitTextIntoTermsArray(Json.stringify(reviewText))
-			inputTermsMap =  addTermsToTermsMap(inputTermsArray, inputTermsMap, reviewIndex, totalNumberOfReviews)
-			reviewIndex = reviewIndex + 1
-
+		def addDocument(terms : Array[String], i : Int) = {
+			for (t <- terms) {
+				var occurrences = matrix.getOrElse(t, Array.fill[Int](size)(0))
+				occurrences(i) = 1
+				matrix.update(t, occurrences)
 			}
-
-			TrainingDataMap = inputTermsMap
-			return TrainingDataMap 
 		}
 
-		def getTermsArrayFromMap( inputTermsMap:dataMap): Array[String] = {
-			val pairs = inputTermsMap.toSeq.sortBy(_._1)
-			val (keys, vals) = pairs.unzip
-			println (keys.toArray)
-			return keys.toArray
-			
+		def getTerms() : Array[String] = {
+			matrix.keys.toArray
 		}
 
-		def getOccurencesArrayFromMap( inputTermsMap:dataMap): Array[Int] = {
-			val pairs = inputTermsMap.toSeq.sortBy(_._1)
-			val (keys, vals) = pairs.unzip
-			println (vals.toArray)
-			return vals.toArray
+		def getOccurences : Array[Array[Int]] = {
+			matrix.values.toArray
 		}
-
-		// import scala.collection.mutable.ArrayBuffer
-	def splitTextIntoTermsArray(reviewText:String):Array[String] = {
-		// needs improved splitting of text based on exclamations, periods, comas, etcs
-		 val termsArray = reviewText.split(" ")
-		 return termsArray
 	}
 
-	def addTermsToTermsMap(inputTermsArray:Array[String],inputTermsMap:dataMap, reviewIndex:Int, totalNumberOfReviews:Int):dataMap = {
-		// iterate through the inputTermsArray and add it to the map of termsArray
-		// if there are a total of 4 total documents, then Map should be i.e key = "dog" value = [0, 1, 0, 1] if documents 2 and 4 have the term dog
-		for( a <- 0 to inputTermsArray.length-1){
+	def preprocess(sourceFile: String) : DataMap = {
+		var trainingDataMap : DataMap = collection.mutable.Map[String, Int]()
+		
+		val source = Source.fromFile(sourceFile)
+		val reviews = source.getLines
+		val numReviews = reviews.size
+		
+		var i = 0
 
- 			 var keyString = inputTermsArray(a)
-				if( inputTermsMap.contains( keyString )) {
-			     }  else {
-			     	val emptyArray = 
-			     		inputTermsMap += (keyString ->  0 )
-			     		// inputTermsMap += (keyString ->  Array.fill(1)(0) )
-			           // inputTermsMap += (keyString ->  Array.fill(1)(0) )
-			       		// println(inputTermsMap(keyString)(1))
+		while (reviews.hasNext) {
+			val review = reviews.next()
+			val json = Json.parse(review)
+			val reviewText = Json.stringify((json \ "reviewText").get)
+			val terms = splitTerms(reviewText)
+			trainingDataMap = addTermsToTermsMap(terms, trainingDataMap, i, numReviews)
+			i += 1
+		}
 
-			      }
-			      var mappedValue  = inputTermsMap(keyString)
-			     	// mappedValue(reviewIndex) = mappedValue(reviewIndex) + 1
-			     	mappedValue = mappedValue + 1
-			     	inputTermsMap(keyString) = mappedValue
-			     	// println(keyString)
-			     	// println(mappedValue)
+		return trainingDataMap
+	}
+
+	// needs improved splitting of text based on exclamations, periods, comas, etcs
+	def splitTerms(reviewText: String) : Array[String] = {
+		val termsArray = reviewText.split(" ")
+		return termsArray
+	}
+
+	// iterate through the inputTermsArray and add it to the map of termsArray
+	// if there are a total of 4 total documents, then Map should be i.e key = "dog" value = [0, 1, 0, 1] if documents 2 and 4 have the term dog
+	def addTermsToTermsMap(inputTermsArray: Array[String], inputTermsMap: DataMap,
+		                   reviewIndex: Int, totalNumberOfReviews: Int) : DataMap = {
+		
+		for(t <- inputTermsArray){
+			if (inputTermsMap.contains(t )) {
+		     }  else {
+		     	val emptyArray = 
+		     		inputTermsMap += (t ->  0 )
+		     		// inputTermsMap += (t ->  Array.fill(1)(0) )
+		           // inputTermsMap += (t ->  Array.fill(1)(0) )
+		       		// println(inputTermsMap(t)(1))
+
+		      }
+		      var mappedValue  = inputTermsMap(t)
+		     	// mappedValue(reviewIndex) = mappedValue(reviewIndex) + 1
+		     	mappedValue = mappedValue + 1
+		     	inputTermsMap(t) = mappedValue
+		     	// println(t)
+		     	// println(mappedValue)
 			}
 			return inputTermsMap
 	}
 
+	def getTermsArrayFromMap(inputTermsMap: DataMap): Array[String] = {
+		val pairs = inputTermsMap.toSeq.sortBy(_._1)
+		val (keys, vals) = pairs.unzip
+		println (keys.toArray)
+		return keys.toArray
+		
+	}
 
-
+	def getOccurencesArrayFromMap(inputTermsMap: DataMap): Array[Int] = {
+		val pairs = inputTermsMap.toSeq.sortBy(_._1)
+		val (keys, vals) = pairs.unzip
+		println (vals.toArray)
+		return vals.toArray
+	}
 
 	def parseJsonExampleFunction(jsonString:String) = {
 // refer to here for the example

@@ -1,4 +1,6 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\cnguye05\Desktop\productrec\productrec\src\main\scala\LSA.scala:36:33: ';' expected but '.' found.[0m
-[0m[[0m[31merror[0m] [0m[0m	println trainingOccurencesArray.length[0m
-[0m[[0m[31merror[0m] [0m[0m	                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/DataParser.scala:32:18: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Array[Array[Int]][0m
+[0m[[0m[31merror[0m] [0m[0m required: Array[Int][0m
+[0m[[0m[31merror[0m] [0m[0m			matrix.values.toArray[0m
+[0m[[0m[31merror[0m] [0m[0m			              ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
