@@ -13,9 +13,7 @@ object LSA {
 	
 	def run(sourceFile: String) = {
 		val trainingDataMap = DataParser.parse(sourceFile)
-		val trainingTerms = trainingDataMap.getTerms()
 		val trainingCounts = trainingDataMap.getCounts()
-
 		val trainingCountsVector = DenseVector(trainingCounts:_*)
 		val correlationMatrix = trainingCountsVector * trainingCountsVector.t
 	}
