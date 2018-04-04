@@ -16,6 +16,7 @@ object LSA {
 		val trainingCounts = trainingDataMap.getCounts()
 		val trainingCountsVector = DenseVector(trainingCounts:_*)
 		val correlationMatrix = trainingCountsVector * trainingCountsVector.t
+		correlationMatrix
 	}
 
 }

@@ -33,19 +33,17 @@ object DataParser {
 
 	def parse(sourceFile: String) : DataMap = {
 		val dataMap = new DataMap()
-		val source = Source.fromFile(sourceFile)
+		val source = scala.io.Source.fromFile(sourceFile)
 		val reviews = source.getLines
-		val numReviews = reviews.size
-
-		source.close
 		
-		while (reviews.hasNext) {
-			val review = reviews.next()
+		for (review <- reviews) {
 			val json = Json.parse(review)
 			val reviewText = Json.stringify((json \ "reviewText").get)
 			val terms = reviewText.replaceAll("[.!?,;:]", "").split(" ")
 			dataMap.addTerms(terms)
 		}
+
+		source.close
 
 		return dataMap
 	}

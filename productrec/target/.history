@@ -12,3 +12,9 @@ console
 :q
 console
 ~run
+~run Musical_Instruments_5.json
+~run src/resources/Musical_Instruments_5.json
+console
+~run src/resources/Musical_Instruments_5.json
+run src/resources/Musical_Instruments_5.json
+~run src/resources/Musical_Instruments_5.json
