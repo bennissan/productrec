@@ -36,6 +36,8 @@ object DataParser {
 		val source = Source.fromFile(sourceFile)
 		val reviews = source.getLines
 		val numReviews = reviews.size
+
+		source.close
 		
 		while (reviews.hasNext) {
 			val review = reviews.next()
