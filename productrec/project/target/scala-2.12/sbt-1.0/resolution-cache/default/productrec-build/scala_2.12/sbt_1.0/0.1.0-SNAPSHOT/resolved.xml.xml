@@ -4,7 +4,7 @@
 		module="productrec-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180403230550"
+		publication="20180425173510"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

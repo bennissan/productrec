@@ -8,44 +8,50 @@
 
 import scala.io.Source
 import play.api.libs.json._
+import breeze.linalg.DenseMatrix
 
 object DataParser {
 
-	class DataMap {
-		val map = collection.mutable.Map[String, Int]()
+	class TermDocumentMatrix(val s: Int) {
+		val matrix = collection.mutable.Map[String, DenseMatrix[Int]]()
+		val size = s
 
-		def addTerms(terms : Array[String]) = {
+		def addTerms(terms : Array[String], d: Int) = {
 			for (t <- terms) {
-				var counts = map.getOrElse(t, 0)
-				counts += 1
-				map.update(t, counts)
+				var documents = matrix.getOrElse(t, DenseMatrix.zeros[Int](1, size))
+				documents(0, d) += 1
+				matrix.update(t, documents)
 			}
 		}
 
 		def getTerms() : Array[String] = {
-			map.keys.toArray
+			matrix.keys.toArray
 		}
 
-		def getCounts() : Array[Int] = {
-			map.values.toArray
+		def getCounts() : DenseMatrix[Int] = {
+			matrix.values.reduceLeft(DenseMatrix.horzcat(_, _))
 		}
+
+
 	}
 
-	def parse(sourceFile: String) : DataMap = {
-		val dataMap = new DataMap()
+	def parse(sourceFile: String) : TermDocumentMatrix = {
 		val source = scala.io.Source.fromFile(sourceFile)
-		val reviews = source.getLines
+		var reviews = source.getLines.toArray
+		val tdm = new TermDocumentMatrix(reviews.size)
+		var i = 0
 		
 		for (review <- reviews) {
 			val json = Json.parse(review)
 			val reviewText = Json.stringify((json \ "reviewText").get)
 			val terms = reviewText.replaceAll("[.!?,;:]", "").split(" ")
-			dataMap.addTerms(terms)
+			tdm.addTerms(terms, i)
+			i += 1
 		}
 
 		source.close
 
-		return dataMap
+		return tdm
 	}
 
 }

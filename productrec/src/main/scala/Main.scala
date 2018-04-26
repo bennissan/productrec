@@ -2,12 +2,12 @@ object Main extends App {
 
     val sourceFile = args(0)
 
-    val dataMap = DataParser.parse(sourceFile)
+    val tdm = DataParser.parse(sourceFile)
     
-    for ((k,v) <- dataMap.map) {
-        printf("(%s, %d), ", k, v)
+    for ((k,v) <- tdm.matrix) {
+        print(k + ": " + v + "\n")
     }
 
-    printf("\nThe data map for %s contains %d terms.\n", sourceFile, dataMap.map.size)
+    printf("\nThe data map for %s contains %d terms.\n", sourceFile, tdm.matrix.size)
 
 }

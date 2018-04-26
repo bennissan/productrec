@@ -1,4 +1,6 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/Main.scala:7:5: not found: value printfln[0m
-[0m[[0m[31merror[0m] [0m[0m    printfln("The data map for %s contains %d terms.", sourceFile, dataMap.map.size)[0m
-[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:17:42: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : breeze.linalg.DenseMatrix[Int][0m
+[0m[[0m[31merror[0m] [0m[0m required: Seq[?][0m
+[0m[[0m[31merror[0m] [0m[0m		val trainingCountsVector = DenseVector(trainingCounts:_*)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
