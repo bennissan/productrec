@@ -29,3 +29,30 @@ update
 console
 ~run src/resources/Musical_Instruments_5.json
 ~run src/resources/Musical_Instruments_5_small.json
+console
+~run src/resources/Musical_Instruments_5_small.json
+~run src/resources/Musical_Instruments_5_1000.json
+run src/resources/Musical_Instruments_5_1000.json
+run src/resources/Musical_Instruments_5.json
+~run src/resources/Musical_Instruments_5.json
+console
+~run src/resources/Musical_Instruments_5.json
+console
+~run src/resources/Musical_Instruments_5.json
+~run src/resources/Musical_Instruments_5_1000.json
+console
+~run src/resources/Musical_Instruments_5_1000.json
+console
+~run src/resources/Musical_Instruments_5_1000.json
+~run src/resources/Musical_Instruments_5_100.json
+~run src/resources/Musical_Instruments_5_10.json
+~run src/resources/Musical_Instruments_5_100.json
+~run src/resources/Musical_Instruments_5_10.json
+console
+~run src/resources/Musical_Instruments_5_10.json
+console
+~run src/resources/Musical_Instruments_5_10.json
+~run src/resources/Musical_Instruments_5_50.json
+~run src/resources/Musical_Instruments_5_100.json
+~run src/resources/Musical_Instruments_5_1000.json
+~run src/resources/Musical_Instruments_5_100.json

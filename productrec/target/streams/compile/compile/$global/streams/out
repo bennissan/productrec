@@ -1,6 +1,11 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:17:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : breeze.linalg.DenseMatrix[Int][0m
-[0m[[0m[31merror[0m] [0m[0m required: Seq[?][0m
-[0m[[0m[31merror[0m] [0m[0m		val trainingCountsVector = DenseVector(trainingCounts:_*)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:39:39: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : breeze.linalg.norm.type[0m
+[0m[[0m[31merror[0m] [0m[0m required: breeze.linalg.DenseVector[Double] => ?[0m
+[0m[[0m[31merror[0m] [0m[0m        println(svdMatrix2(::, *).map(norm) - svdMatrix1(::, *).map(norm))[0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:39:69: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : breeze.linalg.norm.type[0m
+[0m[[0m[31merror[0m] [0m[0m required: breeze.linalg.DenseVector[Double] => ?[0m
+[0m[[0m[31merror[0m] [0m[0m        println(svdMatrix2(::, *).map(norm) - svdMatrix1(::, *).map(norm))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
