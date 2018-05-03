@@ -3,9 +3,10 @@
 // Natural Language Processing
 //
 // This file uses an internal TermDocumentMatrix class to process a
-// source file into a term-document matrix mapping each term in the
-// file to the number of times it appears in the file. A term is
-// currently defined as a single word, stripped of surrounding punctuation.
+// source file of reviews into a term-document matrix mapping each term
+// in the file to its term frequency–inverse document frequency. A term
+// is defined as a single word, stripped of surrounding punctuation.
+// A document is defined as a single review.
 
 import scala.io.Source
 import play.api.libs.json._

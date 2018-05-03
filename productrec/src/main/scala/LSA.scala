@@ -4,7 +4,8 @@
 //
 // This file uses DataParser's parse function to process a source
 // file into a term-document matrix.  It then derives the single value
-// decomposition of this matrix to obtain a form useful for Latent Semantic Analysis.
+// decomposition of this matrix to obtain a form useful for Latent
+// Semantic Analysis and outputs topics obtained by the LSA algorithm.
 
 import breeze.linalg._
 import breeze.stats._
