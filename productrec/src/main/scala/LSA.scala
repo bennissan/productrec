@@ -51,7 +51,7 @@ object LSA {
 
         for (i <- 0 to vt.rows - 1) {
             val topic = vt(i, ::).t.toArray
-            val threshold = percentile(topic.filter(_ >= 0), .8)
+            val threshold = percentile(topic.filter(_ >= 0), .99)
             val indices = topic.zipWithIndex.filter(_._1 >= threshold).map(_._2)
 
             documentTopics :+= indices
