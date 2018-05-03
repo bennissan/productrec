@@ -7,6 +7,7 @@
 // decomposition of this matrix to obtain a form useful for Latent Semantic Analysis.
 
 import breeze.linalg._
+import breeze.stats._
 import DataParser.TermDocumentMatrix
 
 object LSA {
@@ -20,18 +21,39 @@ object LSA {
             return (U, svdB.S, svdB.Vt(0 to k - 1, ::))
     }
 	
-	def run(tdm: TermDocumentMatrix) = {
-        var k = 1
+	def getTermTopics(tdm: TermDocumentMatrix, k: Int) : Array[Array[String]] = {
+        val terms = tdm.getTerms
+        val A = tdm.getTFIDFMatrix
+        val (u, s, vt) = fastTruncatedSVD(A, k)
+        var termTopics = Array[Array[String]]()
 
-        val A = tdm.getMatrix
+        for (i <- 0 to u.cols - 1) {
+            val topic = u(::, i).toArray
+            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .99)
+            val indices = topic.zipWithIndex.filter(_._1 >= threshold).map(_._2)
+            val topicTerms = indices.map(terms)
 
-        for (k <- 1 to 100) {
-            val (u, s, vt) = fastTruncatedSVD(A, k)
-            val svdMatrix = u * diag(s) * vt
-
-            println(A(::, *).map(x => norm(x)) - svdMatrix(::, *).map(x => norm(x)))
-            println
+            termTopics :+= topicTerms
         }
+
+        return termTopics
 	}
+
+    def getDocumentTopics(tdm: TermDocumentMatrix, k: Int) : Array[Array[Int]] = {
+        val A = tdm.getTFIDFMatrix
+        val (u, s, vt) = fastTruncatedSVD(A, k)
+        var documentTopics = Array[Array[Int]]()
+
+        for (i <- 0 to vt.rows - 1) {
+            val topic = vt(i, ::).t.toArray
+            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .8)
+            val indices = topic.zipWithIndex.filter(_._1 >= threshold).map(_._2)
+
+            documentTopics :+= indices
+        }
+
+        return documentTopics
+
+    }
 
 }

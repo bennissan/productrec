@@ -10,6 +10,11 @@
 import scala.io.Source
 import play.api.libs.json._
 import breeze.linalg.DenseMatrix
+import breeze.linalg.sum
+import breeze.linalg.*
+import breeze.linalg.diag
+import scala.math.log
+
 
 object DataParser {
 
@@ -29,8 +34,16 @@ object DataParser {
 			matrix.keys.toArray
 		}
 
-		def getMatrix() : DenseMatrix[Double] = {
+		def getTFMatrix() : DenseMatrix[Double] = {
 			matrix.values.reduceLeft(DenseMatrix.vertcat(_, _))
+		}
+
+		def getTFIDFMatrix() : DenseMatrix[Double] = {
+			val tfMatrix = getTFMatrix()
+			val zeros = DenseMatrix.zeros[Double](tfMatrix.rows, tfMatrix.cols)
+			val occurences = (tfMatrix >:> zeros).map(_.compare(false).toDouble)
+			val idfVector = (sum(occurences(*, ::)) / size.toDouble).map(-1 * log(_))
+			diag(idfVector) * tfMatrix
 		}
 
 
