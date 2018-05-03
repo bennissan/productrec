@@ -75,3 +75,5 @@ run src/resources/Musical_Instruments_5_100.json 100
 run src/resources/Musical_Instruments_5_1000.json 10
 run src/resources/Musical_Instruments_5_500.json 50
 run src/resources/Automotive_5_500.json 50
+run src/resources/Automotive_5_10.json 10
+~run src/resources/Automotive_5_10.json 10

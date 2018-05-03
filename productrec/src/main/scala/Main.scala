@@ -1,3 +1,12 @@
+// Main.scala
+// Ben Nissan and Cuong Nguyen
+// Natural Language Processing
+//
+// This file runs Latent Semantic Analysis on the provided source file
+// with the provided SVD constant.  To run in SBT: run [filepath] [k],
+// where k must be equal to or less than the number of reviews in the
+// source file.
+
 object Main extends App {
 
     val sourceFile = args(0)

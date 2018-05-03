@@ -9,12 +9,14 @@
 // A document is defined as a single review.
 
 import scala.io.Source
-import play.api.libs.json._
-import breeze.linalg.DenseMatrix
-import breeze.linalg.sum
-import breeze.linalg.*
-import breeze.linalg.diag
 import scala.math.log
+
+import play.api.libs.json._
+
+import breeze.linalg.*
+import breeze.linalg.DenseMatrix
+import breeze.linalg.diag
+import breeze.linalg.sum
 
 
 object DataParser {

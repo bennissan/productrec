@@ -7,9 +7,13 @@
 // decomposition of this matrix to obtain a form useful for Latent
 // Semantic Analysis and outputs topics obtained by the LSA algorithm.
 
-import breeze.linalg._
-import breeze.stats._
 import DataParser.TermDocumentMatrix
+
+import breeze.linalg.DenseMatrix
+import breeze.linalg.DenseVector
+import breeze.linalg.qr
+import breeze.linalg.svd
+import breeze.stats.DescriptiveStats.percentile
 
 object LSA {
 
@@ -30,7 +34,7 @@ object LSA {
 
         for (i <- 0 to u.cols - 1) {
             val topic = u(::, i).toArray
-            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .99)
+            val threshold = percentile(topic.filter(_ >= 0), .99)
             val indices = topic.zipWithIndex.filter(_._1 >= threshold).map(_._2)
             val topicTerms = indices.map(terms)
 
@@ -47,7 +51,7 @@ object LSA {
 
         for (i <- 0 to vt.rows - 1) {
             val topic = vt(i, ::).t.toArray
-            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .8)
+            val threshold = percentile(topic.filter(_ >= 0), .8)
             val indices = topic.zipWithIndex.filter(_._1 >= threshold).map(_._2)
 
             documentTopics :+= indices
