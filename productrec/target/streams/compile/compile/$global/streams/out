@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:37:29: not found: value DescriptiveStats[0m
-[0m[[0m[31merror[0m] [0m[0m            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .99)[0m
-[0m[[0m[31merror[0m] [0m[0m                            ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/LSA.scala:54:29: not found: value DescriptiveStats[0m
-[0m[[0m[31merror[0m] [0m[0m            val threshold = DescriptiveStats.percentile(topic.filter(_ >= 0), .8)[0m
-[0m[[0m[31merror[0m] [0m[0m                            ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/bennissan/Desktop/CompSci/Comp150/Final Project/productrec/productrec/src/main/scala/DataParser.scala:47:44: could not find implicit value for parameter op: breeze.linalg.operators.OpDiv.Impl2[breeze.linalg.DenseVector[Int],Double,That][0m
+[0m[[0m[31merror[0m] [0m[0m			val idfVector = (sum(occurences(*, ::)) / size.toDouble).map(-1 * log(_))[0m
+[0m[[0m[31merror[0m] [0m[0m			                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

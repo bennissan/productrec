@@ -43,8 +43,7 @@ object DataParser {
 
 		def getTFIDFMatrix() : DenseMatrix[Double] = {
 			val tfMatrix = getTFMatrix()
-			val zeros = DenseMatrix.zeros[Double](tfMatrix.rows, tfMatrix.cols)
-			val occurences = (tfMatrix >:> zeros).map(_.compare(false).toDouble)
+			val occurences = tfMatrix.map(x => if (x > 0) 1d else 0d)
 			val idfVector = (sum(occurences(*, ::)) / size.toDouble).map(-1 * log(_))
 			diag(idfVector) * tfMatrix
 		}
