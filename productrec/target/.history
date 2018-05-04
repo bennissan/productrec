@@ -81,3 +81,4 @@ run src/resources/Musical_Instruments_5_500.json 50
 run src/resources/Automotive_5_500.json 50
 console
 run src/resources/Automotive_5_50.json 50
+run src/resources/Musical_Instruments_5_500.json 50
