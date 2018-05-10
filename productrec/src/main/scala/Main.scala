@@ -53,7 +53,7 @@ object Main extends App {
     println
 
     val comparisonScoresArray = comparisonScores.toArray
-    val min = comparisonScoresArray.sortWith(_ < _)(1)
+    val min = comparisonScoresArray.sortWith(_ < _)(0)
     println("min: " + min + " at index " + comparisonScoresArray.indexOf(min))
     println
 
