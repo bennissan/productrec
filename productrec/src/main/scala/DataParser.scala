@@ -37,37 +37,57 @@ object DataParser {
 			matrix.keys.toArray
 		}
 
-		def getTFMatrix() : DenseMatrix[Double] = {
-			matrix.values.reduceLeft(DenseMatrix.vertcat(_, _))
+		def getTFSubMatrix(cols: Int) : DenseMatrix[Double] = {
+			matrix.values.reduceLeft(DenseMatrix.vertcat(_, _))(::, 0 to cols)
 		}
 
-		def getTFIDFMatrix() : DenseMatrix[Double] = {
-			val tfMatrix = getTFMatrix()
+		def getTFIDFSubMatrix(cols: Int) : DenseMatrix[Double] = {
+			val tfMatrix = getTFSubMatrix(cols - 1)
 			val occurences = tfMatrix.map(x => if (x > 0) 1d else 0d)
-			val idfVector = (sum(occurences(*, ::)) / size.toDouble).map(-1 * log(_))
+			val idfVector = (sum(occurences(*, ::)) / size.toDouble).map(-1 * log(_)).map(x => if (x.isInfinite) 0 else x)
 			diag(idfVector) * tfMatrix
 		}
 
+		def getTFMatrix() : DenseMatrix[Double] = {
+			getTFSubMatrix(size)
+		}
 
+		def getTFIDFMatrix() : DenseMatrix[Double] = {
+			getTFIDFSubMatrix(size)
+		}
 	}
 
-	def parse(sourceFile: String) : TermDocumentMatrix = {
-		val source = scala.io.Source.fromFile(sourceFile)
-		var reviews = source.getLines.toArray
-		val tdm = new TermDocumentMatrix(reviews.size)
+	class ReviewData(val s: Int) {
+		val tdm = new TermDocumentMatrix(s)
+		var asins = Array[String]()
+	}
+
+	def parse(trainFile: String, testFile: String) : ReviewData = {
+		val train = scala.io.Source.fromFile(trainFile)
+		val test = scala.io.Source.fromFile(testFile)
+
+		var trainReviews = train.getLines.toArray
+		var testReviews = test.getLines.toArray
+		var reviews = trainReviews ++ testReviews
+		
+		val data = new ReviewData(reviews.size)
 		var i = 0
 		
 		for (review <- reviews) {
 			val json = Json.parse(review)
+			val asin = Json.stringify((json \ "asin").get)
 			val reviewText = Json.stringify((json \ "reviewText").get)
 			val terms = reviewText.replaceAll("[.!?,;:*\"()~+\\\\/]", " ").toLowerCase.split(" ")
-			tdm.addTerms(terms, i)
+
+			data.tdm.addTerms(terms, i)
+			data.asins :+= asin
 			i += 1
 		}
 
-		source.close
+		train.close
+		test.close
 
-		return tdm
+		return data
 	}
 
 }
