@@ -73,4 +73,9 @@ object LSA {
         return vt(::, *).map(col => cosineDistance(col, qk)).t
     }
 
+    def getRecommendations(comparisonScores: DenseVector[Double], asins: Array[String]) : String = {
+        val sortedScores = comparisonScores.toArray.zipWithIndex.sortBy(_._1)
+        return asins(sortedScores(0)._2)
+    }
+
 }

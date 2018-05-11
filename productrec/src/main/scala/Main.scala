@@ -62,4 +62,8 @@ object Main extends App {
     println("sigma: " + breeze.stats.stddev(comparisonScores))
     println
 
+    val recommendation = LSA.getRecommendations(comparisonScores, data.asins)
+
+    println("Based on your review for " + data.asins.last + ", you might like " + recommendation + ".")
+
 }
